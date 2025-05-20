@@ -63,6 +63,17 @@ class Shop {
     const result = await db.query(query, [id])
     return result.rows
   }
+
+  static async findByBlockAndHouseNumber(blockId, houseNumber) {
+    const query = `
+      SELECT s.*
+      FROM shops s
+      JOIN house_numbers h ON s.house_number_id = h.id
+      WHERE h.block_id = $1 AND h.nomor = $2
+    `
+    const { rows } = await db.query(query, [blockId, houseNumber])
+    return rows
+  }
 }
 
 module.exports = Shop

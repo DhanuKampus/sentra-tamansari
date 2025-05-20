@@ -184,6 +184,30 @@ class BlockController {
       return errorResponse(res, 'Ups! Gagal mengambil data nomor rumah', error.message)
     }
   }
+
+  async getShopsByHouseNumber(req, res) {
+    const { houseNumber } = req.query
+    const blockId = req.params.id
+
+    try {
+      // First check if block exists
+      const block = await Block.findById(blockId)
+      if (!block) {
+        return errorResponse(res, 'Ups! Blok tidak ditemukan', 'Data tidak ditemukan', 404)
+      }
+
+      // Get shops filtered by house number
+      const shops = await Shop.findByBlockAndHouseNumber(blockId, houseNumber)
+
+      return successResponse(
+        res,
+        `Berhasil mengambil data toko di Blok ${block.nama} nomor ${houseNumber}`,
+        shops
+      )
+    } catch (error) {
+      return errorResponse(res, 'Ups! Gagal mengambil data toko', error.message)
+    }
+  }
 }
 
 module.exports = new BlockController()

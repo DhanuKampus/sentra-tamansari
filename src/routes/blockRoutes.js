@@ -10,5 +10,6 @@ router.delete('/:id', blockController.destroy)
 router.get('/:id/shops', blockController.getShops)
 router.post('/:id/house-numbers', blockController.addHouseNumber)
 router.get('/:id/house-numbers', blockController.getHouseNumbers)
+router.get('/:id/shops-by-house', blockController.getShopsByHouseNumber)
 
 module.exports = router
